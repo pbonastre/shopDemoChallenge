@@ -20,6 +20,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
@@ -42,6 +44,9 @@ import com.db.repository.ShopRepository;
 @Transactional
 @WebAppConfiguration
 public class ShopControllerTest {
+	
+	private static final Logger log = LoggerFactory.getLogger(ShopControllerTest.class);
+
 
 	private static final String SHOP_TWO = "shopTwo";
 
@@ -91,11 +96,13 @@ public class ShopControllerTest {
 		this.shopAddressRepository.deleteAllInBatch();
 		informShopAdressOne(shopAddressOne);
 		this.shopList.add(shopRepository.save(new Shop(SHOP_ONE, shopAddressOne, SHOP1_URL)));
+		log.debug("Initializing test with shop added");
 	}
 	
 	@After
     public void tearDown() throws Exception {
         shopRepository.deleteAllInBatch();
+        log.debug("Finalizing ShopControllerTest");
     }
 
 

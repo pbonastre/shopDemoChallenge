@@ -10,12 +10,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SHOPADDRESS")
-public class ShopAddress implements Serializable{
-	
-	
-	
+public class ShopAddress implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	@Id
 	@GeneratedValue
 	@Column(name = "ADDRESS_ID")
@@ -23,20 +21,19 @@ public class ShopAddress implements Serializable{
 
 	@Column(name = "number")
 	private String number;
-	
+
 	@Column(name = "postCode")
 	private String postCode;
-	
+
 	@Column(name = "longitude")
 	private Double longitude;
-	
+
 	@Column(name = "latitude")
 	private Double latitude;
-	
-	
+
 	public ShopAddress() {
 	}
-	
+
 	public ShopAddress(String number, String postCode, Double longitude, Double latitude) {
 		super();
 		this.number = number;
@@ -45,51 +42,42 @@ public class ShopAddress implements Serializable{
 		this.latitude = latitude;
 	}
 
-
 	public String getNumber() {
 		return number;
 	}
-
 
 	public void setNumber(String number) {
 		this.number = number;
 	}
 
-
 	public String getPostCode() {
 		return postCode;
 	}
-
 
 	public void setPostCode(String postCode) {
 		this.postCode = postCode;
 	}
 
-
 	public Double getLongitude() {
 		return longitude;
 	}
-
 
 	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
-
 	public Double getLatitude() {
 		return latitude;
 	}
-
 
 	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-
 	@Override
 	public String toString() {
-		return "ShopAddress [number=" + number + ", postCode=" + postCode + ", longitude="
-				+ longitude + ", latitude=" + latitude + "]";
+		return "ShopAddress [number=" + number + ", postCode=" + postCode + ", longitude=" + longitude + ", latitude="
+				+ latitude + "]";
 	}
 
 	public Long getAddressId() {
@@ -99,7 +87,5 @@ public class ShopAddress implements Serializable{
 	public void setAddressId(Long addressId) {
 		this.addressId = addressId;
 	};
-	
-	
 
 }

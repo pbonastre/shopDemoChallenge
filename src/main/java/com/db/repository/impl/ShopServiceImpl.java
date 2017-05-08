@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import com.db.entity.Shop;
 import com.db.repository.ShopRepository;
 import com.db.repository.ShopService;
-
+import com.db.utils.UtilsShop;
 
 @Service
 @Transactional
 public class ShopServiceImpl implements ShopService {
-	
+
 	@Autowired
 	private ShopRepository shopRepository;
 
@@ -24,16 +24,16 @@ public class ShopServiceImpl implements ShopService {
 		return shopRepository.findAll();
 	}
 
-
-
 	@Override
 	@Transactional
 	public void saveShop(Shop shop) {
-		Optional<Shop> testShop = this.findByName(shop.getName());
-		System.out.println("valor de la tienda FindBy "+testShop.toString());
-		System.out.println("valor de la tienda INSERTED "+shop.toString());
-		
+		addShopGeoLocation(shop);
 		shopRepository.save(shop);
+
+	}
+
+	private void addShopGeoLocation(Shop shop) {
+		UtilsShop.updateGeolocation(shop);
 	}
 
 	@Override
@@ -41,22 +41,9 @@ public class ShopServiceImpl implements ShopService {
 		return shopRepository.findByName(name);
 	}
 
-
-
 	@Override
 	public Shop findOne(long id) {
 		return shopRepository.findOne(id);
 	}
-
-
-
-	@Override
-	public Optional<Shop> findByNameAndId(String name, long id) {
-		return shopRepository.findByNameAndId(name,id);
-	}
-
-
-
-	
 
 }

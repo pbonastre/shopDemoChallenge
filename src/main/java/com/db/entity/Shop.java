@@ -12,45 +12,37 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "SHOP")
-public class Shop implements Serializable{
+public class Shop implements Serializable {
 
-	
-	
 	private static final long serialVersionUID = 1L;
 
-
-	
-	
 	@Id
-	@Column(name = "name",nullable = false,unique=true, length = 100)
+	@Column(name = "name", nullable = false, unique = true, length = 100)
 	private String name;
-	
-	@Column(name = "uri",nullable = true)
+
+	@Column(name = "uri", nullable = true)
 	private String uri;
-	
-	
+
 	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="ADDRESS_ID", nullable = false)
+	@JoinColumn(name = "ADDRESS_ID", nullable = false)
 	private ShopAddress shopAddress;
-	
-	
-	public Shop(){
+
+	public Shop() {
 	}
-	
+
 	public Shop(String name, ShopAddress shopAddress, String uri) {
 		super();
 		this.name = name;
 		this.shopAddress = shopAddress;
 		this.uri = uri;
 	}
-	
+
 	public Shop(String name, ShopAddress shopAddress) {
 		super();
 		this.name = name;
 		this.shopAddress = shopAddress;
 	}
-	
-	
+
 	public String getUri() {
 		return uri;
 	}
@@ -62,17 +54,18 @@ public class Shop implements Serializable{
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
 	public ShopAddress getShopAddress() {
 		return shopAddress;
 	}
+
 	public void setShopAddress(ShopAddress shopAddress) {
 		this.shopAddress = shopAddress;
 	}
-
-	
 
 	@Override
 	public String toString() {

@@ -16,5 +16,4 @@ public interface ShopService {
 	@Cacheable ("shops")
 	public Shop findOne(long id);
 	Optional<Shop> findByName(String name);
-	Optional<Shop> findByNameAndId(String name, long id);
 }

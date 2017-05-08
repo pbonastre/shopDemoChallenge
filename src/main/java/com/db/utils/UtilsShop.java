@@ -19,6 +19,13 @@ public class UtilsShop {
 	private static final Logger log = LoggerFactory.getLogger(UtilsShop.class);
 	static final String YOUR_API_KEY = "AIzaSyBciQ0h0KlwGtLoG9my9u2xmiaUBiCmg0w";
 	
+	
+	public static void updateGeolocation(final Shop shop) {
+		addPositionInfo(shop);
+
+	}
+	
+	
 	public static Shop addPositionInfo(Shop shop) {
 		GeoApiContext context = new GeoApiContext().setApiKey(YOUR_API_KEY);
 		GeocodingResult[] results;
