@@ -1,0 +1,103 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Shop Demo Collection",
+		"_postman_id": "8237eae9-b696-d23e-d080-f57d511a5503",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "List Shops (empty the first time)",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests[\"Content-Type is present\"] = postman.getResponseHeader(\"Content-Type\");"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/shops/",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": "List Shops"
+			},
+			"response": []
+		},
+		{
+			"name": "Insert Shop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 201\"] = responseCode.code === 201;",
+							"",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/shops/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Madrid shop\",\n\t\"shopAddress\" : {\n\t\t\"number\": \"2\",\n\t\t\"postCode\": \"45001\"\n\t}\n}"
+				},
+				"description": "Adding shop"
+			},
+			"response": []
+		},
+		{
+			"name": "Update and existing Shop",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"tests[\"Status code is 200\"] = responseCode.code === 200;",
+							"tests[\"Resource location is present\"] = postman.getResponseHeader(\"location\") === \"http://localhost:8080/shops/Madrid%20shop\";",
+							"",
+							"var jsonData = JSON.parse(responseBody);",
+							"tests[\"Returns 1 shop\"] = jsonData._embedded.shopRepository.length === 1 ;",
+							"tests[\"HAL self link to each resource\"] = jsonData._embedded.shopEntityList[0]._links.self.href === \"http://localhost:8080/shops/Madrid%20shop\" ;"
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/shops/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"name\": \"Madrid shop\",\n\t\"shopAddress\" : {\n\t\t\"number\": \"3\",\n\t\t\"postCode\": \"45013\"\n\t}\n}"
+				},
+				"description": "Adding shop"
+			},
+			"response": []
+		}
+	]
+}
