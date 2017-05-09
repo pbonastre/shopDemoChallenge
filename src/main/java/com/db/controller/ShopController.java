@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.db.entity.Shop;
 import com.db.exception.ShopNotFoundException;
 import com.db.repository.ShopService;
 import com.db.resource.ShopResource;
+import com.db.utils.UtilsShop;
 
 @RestController
 @RequestMapping("/shops")
@@ -34,7 +36,6 @@ public class ShopController {
 	@Autowired
 	private ShopService shopService;
 
-	
 	@RequestMapping(value = "/", method = RequestMethod.GET, produces = { MediaType.APPLICATION_JSON_VALUE,
 			"application/hal+json" })
 	public ResponseEntity<List<Shop>> findAll() {
@@ -65,6 +66,17 @@ public class ShopController {
 	public ResponseEntity<Shop> findShopByName(@PathVariable String name) {
 		Shop shop = this.shopService.findByName(name).orElseThrow(() -> new ShopNotFoundException(name));
 		return ResponseEntity.status(HttpStatus.OK).body(shop);
+	}
+
+	@RequestMapping(value = "/distances/nearestShop", method = RequestMethod.GET)
+	public ResponseEntity<Shop> distance(@RequestParam(value = "longitude", required = true) final String longitude,
+			@RequestParam(value = "latitude", required = true) final String latitude) {
+		LOGGER.info("Calculating nearest city from latitude: " + latitude + ", and longitude: " + longitude);
+
+		Shop nearestShop = UtilsShop.nearestShop(Double.parseDouble(latitude), Double.parseDouble(longitude),
+				shopService.findAll());
+
+		return ResponseEntity.status(HttpStatus.OK).body(nearestShop);
 	}
 
 	private boolean isPresent(Shop shop) {

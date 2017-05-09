@@ -57,7 +57,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Madrid shop\",\n\t\"shopAddress\" : {\n\t\t\"number\": \"2\",\n\t\t\"postCode\": \"45001\"\n\t}\n}"
+					"raw": "{\n\t\"name\": \"Valencia shop\",\n\t\"shopAddress\" : {\n\t\t\"number\": \"2\",\n\t\t\"postCode\": \"46021\"\n\t}\n}"
 				},
 				"description": "Adding shop"
 			},
@@ -75,8 +75,7 @@
 							"tests[\"Resource location is present\"] = postman.getResponseHeader(\"location\") === \"http://localhost:8080/shops/Madrid%20shop\";",
 							"",
 							"var jsonData = JSON.parse(responseBody);",
-							"tests[\"Returns 1 shop\"] = jsonData._embedded.shopRepository.length === 1 ;",
-							"tests[\"HAL self link to each resource\"] = jsonData._embedded.shopEntityList[0]._links.self.href === \"http://localhost:8080/shops/Madrid%20shop\" ;"
+							""
 						]
 					}
 				}
@@ -93,7 +92,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n\t\"name\": \"Madrid shop\",\n\t\"shopAddress\" : {\n\t\t\"number\": \"3\",\n\t\t\"postCode\": \"45013\"\n\t}\n}"
+					"raw": "{\n\t\"name\": \"Valencia shop\",\n\t\"shopAddress\" : {\n\t\t\"number\": \"3\",\n\t\t\"postCode\": \"46023\"\n\t}\n}"
 				},
 				"description": "Adding shop"
 			},

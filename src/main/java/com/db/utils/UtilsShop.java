@@ -1,9 +1,8 @@
 package com.db.utils;
 
 import java.io.IOException;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.List;
+import java.util.ListIterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +31,7 @@ public class UtilsShop {
 
 		try {
 			results = GeocodingApi.geocode(context, shop.getShopAddress().getPostCode()).await();
+			 log.info("setLatitude " + results[0].geometry.location.lat);
 			shop.getShopAddress().setLatitude(results[0].geometry.location.lat);
 			shop.getShopAddress().setLongitude(results[0].geometry.location.lng);
 
@@ -47,33 +47,32 @@ public class UtilsShop {
 	}
 	
 	public static Shop nearestShop(final double latitude, final double longitude,
-			final Map<String, Shop> shopList) {
-		return (findTheNearestShop(latitude, longitude, shopList));
+			final List<Shop> allShops) {
+		return (findTheNearestShop(latitude, longitude, allShops));
 	}
 
-	private static Shop findTheNearestShop(double latitude, double longitude, Map<String, Shop> shopList) {
-		String shopKeyFinal = null;
+	private static Shop findTheNearestShop(double latitude, double longitude,List<Shop> allShops) {
+		Shop shopKeyFinal = null;
 		double distance;
 		Double minimunDistanceBetweenShops = null;
-
-		Iterator<Entry<String, Shop>> iterator = shopList.entrySet().iterator();
+		 ListIterator<Shop> iterator = allShops.listIterator();
+		 log.info("Number of shops " + allShops.size());
 		while (iterator.hasNext()) {
 
-			Entry<String, Shop> entry = iterator.next();
-			Shop shop = (Shop) entry.getValue();
-
+			 Shop shop = iterator.next();
+	
 			distance = calculateDistance(latitude, longitude, shop);
 			boolean isNotDefinedDistance = minimunDistanceBetweenShops == null;
 			if (isNotDefinedDistance) {
 				minimunDistanceBetweenShops = distance;
-				shopKeyFinal = entry.getKey();
+				shopKeyFinal = shop;
 			} else if (distance < minimunDistanceBetweenShops) {
 				minimunDistanceBetweenShops = distance;
-				shopKeyFinal = entry.getKey();
+				shopKeyFinal = shop;
 			}
 		}
 
-		return shopList.get(shopKeyFinal);
+		return shopKeyFinal;
 
 	}
 

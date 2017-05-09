@@ -41,6 +41,12 @@ public class ShopAddress implements Serializable {
 		this.longitude = longitude;
 		this.latitude = latitude;
 	}
+	
+	public ShopAddress(String number, String postCode) {
+		super();
+		this.number = number;
+		this.postCode = postCode;
+	}
 
 	public String getNumber() {
 		return number;
